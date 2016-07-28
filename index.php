@@ -9,7 +9,7 @@
     <img src="img/chicago_logo.png" class="header__logo">
     <h3 class="header__text">Hermosa Energy Dashboard</h3>
 </header>
-<section class="main--app">
+<div class="main--app">
     <aside class="main--app--control">
         <!-- change this to handlebars later -->
         <div class="main--app--control--option datatype">
@@ -20,16 +20,19 @@
             </div>
         </div>
 
-        <div class="main--app--control--option propertytype">
+        <div class="main--app--control--option" id="propertytype">
             <h3>Property Type</h3>
             <!-- property types and subtypes populate here -->
         </div>
-        <div class="main--app--control--option timeframe">
+        <div class="main--app--control--option" id="timeframe">
             <h3>Timeframe</h3>
             <!-- timeframe options populate here -->
         </div>
     </aside>
-</section>
+    <section class="main--app--data">
+        <div class="main--app-data--chart"></div>
+    </section>
+</div>
 
 
 <script src="https://code.jquery.com/jquery-3.1.0.js" type="application/javascript"></script>
