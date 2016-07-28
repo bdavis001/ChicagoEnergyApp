@@ -5,7 +5,7 @@
     kwhtimeframes = [];
     thermstimeframes = [];
     propertysubtypes = [];
-    
+    outputdata = [];
     // Grabs Hermosa Data from City of Chicago
     $.getJSON("https://data.cityofchicago.org/resource/energy-usage-2010.json?community_area_name=Hermosa&$limit=1000&$$app_token=z6DdE5IguzIp3G6lGD3D85bH6", function(data) {
     console.log("got JSON");
@@ -14,9 +14,11 @@
         thermcounts = [0,0,0,0,0,0,0,0,0,0,0,0];
         kwhcumulative = [0,0,0,0,0,0,0,0,0,0,0,0];
         thermcumulative = [0,0,0,0,0,0,0,0,0,0,0,0];
+        dividebyself = [1,1,1,1,1,1,1,1,1,1,1,1];
         // Parses JSON for both kwh and therms used
     parseData(data);
-        renderData();
+        renderData(kwhcumulative, dividebyself, "kWh", "Cumulative Power Usage in kWh");
+        renderData(kwhcumulative,kwhcounts, "kWh", "Average Power Usage in kWh");
         console.log(kwhcumulative);
         console.log(kwhcounts);
         console.log(thermcumulative);
@@ -37,21 +39,21 @@ function parseData(passeddata) {
         createSelector("building_type","#propertytype", propertytypes,val.building_type);
         for (i = 0; i < timeframes.length; i++) {
 
-        //console.log(kwhtimeframes[i]);
+            // populates the data about kwh usage
             if (kwhtimeframes[i] > 0 && kwhtimeframes[i] || 0 && kwhtimeframes[i] !== "undefined") {
-                //console.log(parseInt(kwhtimeframes[i]));
+
                 kwhcumulative[i] += parseInt(kwhtimeframes[i]);
                 kwhcounts[i]++;
             }
+            // populates the data about therms usage
             if (thermstimeframes[i] > 0 && thermstimeframes[i] || 0 && thermstimeframes[i] !== "undefined") {
-                //console.log(parseInt(kwhtimeframes[i]));
+
                 thermcumulative[i] += parseInt(thermstimeframes[i]);
                 thermcounts[i]++;
             }
         }
 
-       // monthlyData()
-        //createSelector("building_type","#propertytype", propertytypes,val.building_type);
+
     });
 }
 
@@ -69,15 +71,19 @@ function createSelector(contenttype,contentblock,arraylist,jsondata) {
         $(contentblock).append('<input type="checkbox" name="' + jsondata + '" id="' + jsondata + '"/><label for="' + jsondata + '">' + jsondata + '</label>');
     }
 }
-    function renderData(){
+    function renderData(whichdata, divisor, datatype, datatitle){
         console.log("rendering");
-        var maxkwh = Math.max.apply(Math,kwhcumulative);
+        for (i = 0; i < whichdata.length; i++) {
+            outputdata[i] = (whichdata[i] / divisor[i]);
+        }
+        var maxval = Math.max.apply(Math,outputdata);
+        $("#main--app--data--chart").append('<h3 class="main-app-data-title">' + datatitle + '</h3>');
         for (i = 0; i < timeframes.length; i++) {
-            var percentage = (kwhcumulative[i] / maxkwh) * 100;
+            var percentage = (outputdata[i] / maxval) * 100;
             var percentage = percentage + "%";
-            var percentage = '<div style="background:#434343; float:left; display:block; height:30px; width:' + percentage + '"></div>';
+
             console.log("Percentage:" + percentage);
-            $("#main--app--data--chart").append(percentage);
+            $("#main--app--data--chart").append('<div style="width:' + percentage + '" class="main-app-data-bar">' + timeframes[i] + ': ' + outputdata[i] + " " + datatype + '</div>');
             console.log("appended");
         }
     }

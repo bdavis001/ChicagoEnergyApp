@@ -22,10 +22,20 @@
 
         <div class="main--app--control--option" id="propertytype">
             <h3>Property Type</h3>
-            <!-- property types and subtypes populate here -->
+            <div class="main--app-control--datatype--select">
+                <label for="commercial" class="datatype-selector-button"><input type="radio" name="buildingtype--select" id="commercial" value="commercial"><span>Commercial</span></label>
+                <label for="residential" class="datatype-selector-button"><input type="radio" name="buildingtype--select" id="residential" value="residential"><span>Residential</span></label>
+            </div>
+        </div>
+        <div class="main--app--control--option" id="dataoutputtype">
+            <h3>Comparison</h3>
+            <div class="main--app-control--datatype--select">
+                <label for="average" class="datatype-selector-button"><input type="radio" name="comparisontype--select" id="average" value="average"><span>Average</span></label>
+                <label for="cumulative" class="datatype-selector-button"><input type="radio" name="comparisontype--select" id="cumulative" value="cumulative"><span>Cumulative</span></label>
+            </div>
         </div>
         <div class="main--app--control--option" id="timeframe">
-            <h3>Timeframe</h3>
+            <h3>Months</h3>
             <!-- timeframe options populate here -->
         </div>
     </aside>

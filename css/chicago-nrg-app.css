@@ -1,11 +1,20 @@
 /* 
 Breakpoint Mixin 
 */
+@keyframes slidein {
+  0% {
+    margin-left: -100%; }
+  100% {
+    margin-left: 0%; } }
+html {
+  height: 100%; }
+
 body {
   background: url("../img/background.jpg") repeat-x 0 0;
   padding: 0px;
   margin: 0px;
-  font-family: "Roboto", Arial, sans-serif; }
+  font-family: "Roboto", Arial, sans-serif;
+  height: 100%; }
 
 header {
   margin: 1%; }
@@ -32,14 +41,15 @@ header {
   box-shadow: 2px 2px 2px #323232;
   float: left;
   margin: 1%;
-  width: 98%; }
+  width: 98%;
+  height: 60%; }
   .main--app .main--app--control {
     width: 350px;
     background: #323232;
-    max-height: 100%;
+    height: 100%;
     display: block;
     float: left;
-    padding: 5px 10px;
+    padding: 0 10px;
     color: #ffffff;
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px; }
@@ -59,5 +69,26 @@ header {
       .main--app .main--app--control .datatype-selector-button span {
         margin: 2px 0px 0px 2px;
         float: left; }
+  .main--app .main--app--data {
+    float: left;
+    display: block;
+    width: 70%;
+    overflow: hidden; }
+    .main--app .main--app--data .main-app-data-title {
+      float: left;
+      display: block;
+      clear: both; }
+    .main--app .main--app--data .main-app-data-bar {
+      background: #a60c07;
+      float: left;
+      display: block;
+      padding: 5px 5px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      border: 1px solid #ffffff;
+      animation-name: slidein;
+      animation-duration: 2s;
+      clear: both;
+      color: #ffffff; }
 
 /*# sourceMappingURL=chicago-nrg-app.css.map */
