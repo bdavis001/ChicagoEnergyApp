@@ -1,23 +1,4 @@
-function init(){
-    // initialize key arrays
-    propertytypes = [];
-    timeframes = [];
-    propertysubtypes = [];
-
-    // Grabs Hermosa Data from City of Chicago
-    $.getJSON("https://data.cityofchicago.org/resource/energy-usage-2010.json?community_area_name=Hermosa&$limit=1000&$$app_token=z6DdE5IguzIp3G6lGD3D85bH6", function(data) {
-
-        
-
-
-    });
-
-
-
-}
-
-
-
+$.getJSON("https://data.cityofchicago.org/resource/energy-usage-2010.json?community_area_name=Hermosa&$limit=1000&$$app_token=z6DdE5IguzIp3G6lGD3D85bH6", function(data) {
     var resinfo = [];
     var cominfo = [];
     communitieslist = [];
@@ -29,7 +10,7 @@ function init(){
     comcounter = 0;
     resinfo.push ("<h2>Residential</h2>");
     cominfo.push ("<h2>Commercial</h2>");
-
+    
 
 
 

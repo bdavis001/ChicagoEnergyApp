@@ -1,0 +1,63 @@
+/* 
+Breakpoint Mixin 
+*/
+body {
+  background: url("../img/background.jpg") repeat-x 0 0;
+  padding: 0px;
+  margin: 0px;
+  font-family: "Roboto", Arial, sans-serif; }
+
+header {
+  margin: 1%; }
+  header .header__logo {
+    float: left;
+    display: inline-block; }
+  header .header__text {
+    font-family: "Roboto", Arial, sans-serif;
+    font-size: 18pt;
+    color: #ffffff;
+    font-weight: 700;
+    text-shadow: 2px 2px 0px #323232;
+    float: left;
+    display: inline-block;
+    margin: 10px 0px 0px 20px; }
+    @media (max-width: 37.5em) {
+      header .header__text {
+        margin: 10px 0px 0px 0px; } }
+
+.main--app {
+  background: #e0e0e0;
+  opacity: .9;
+  border-radius: 4px;
+  box-shadow: 2px 2px 2px #323232;
+  float: left;
+  margin: 1%;
+  width: 98%; }
+  .main--app .main--app--control {
+    width: 350px;
+    background: #323232;
+    max-height: 100%;
+    display: block;
+    float: left;
+    padding: 5px 10px;
+    color: #ffffff;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px; }
+    .main--app .main--app--control .datatype-selector-button {
+      display: block;
+      width: 42%;
+      height: 20px;
+      background: #325ea8;
+      padding: 2%;
+      margin: -2px 4% 0 0;
+      float: left;
+      color: #ffffff;
+      font-size: 9pt;
+      border-radius: 4px; }
+      .main--app .main--app--control .datatype-selector-button input {
+        float: left; }
+      .main--app .main--app--control .datatype-selector-button span {
+        margin: 2px 0px 0px 2px;
+        float: left; }
+
+/*# sourceMappingURL=chicago-nrg-app.css.map */
