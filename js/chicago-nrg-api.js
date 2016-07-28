@@ -16,7 +16,7 @@
         thermcumulative = [0,0,0,0,0,0,0,0,0,0,0,0];
         // Parses JSON for both kwh and therms used
     parseData(data);
-
+        renderData();
         console.log(kwhcumulative);
         console.log(kwhcounts);
         console.log(thermcumulative);
@@ -70,7 +70,16 @@ function createSelector(contenttype,contentblock,arraylist,jsondata) {
     }
 }
     function renderData(){
-        Math.max.apply(Math,kwhcumulative); // 3
+        console.log("rendering");
+        var maxkwh = Math.max.apply(Math,kwhcumulative);
+        for (i = 0; i < timeframes.length; i++) {
+            var percentage = (kwhcumulative[i] / maxkwh) * 100;
+            var percentage = percentage + "%";
+            var percentage = '<div style="background:#434343; float:left; display:block; height:30px; width:' + percentage + '"></div>';
+            console.log("Percentage:" + percentage);
+            $("#main--app--data--chart").append(percentage);
+            console.log("appended");
+        }
     }
 
     /*

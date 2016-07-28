@@ -30,7 +30,7 @@
         </div>
     </aside>
     <section class="main--app--data">
-        <div class="main--app-data--chart"></div>
+        <div id="main--app--data--chart"></div>
     </section>
 </div>
 
