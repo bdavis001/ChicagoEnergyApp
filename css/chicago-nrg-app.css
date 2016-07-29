@@ -69,6 +69,14 @@ header {
       .main--app .main--app--control .datatype-selector-button span {
         margin: 2px 0px 0px 2px;
         float: left; }
+    .main--app .main--app--control .main--app-control--button {
+      width: 90%;
+      display: block;
+      float: left;
+      margin: 20px 0px;
+      background: #a60c07;
+      padding: 10px;
+      text-align: center; }
   .main--app .main--app--data {
     float: left;
     display: block;

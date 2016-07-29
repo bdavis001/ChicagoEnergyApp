@@ -1,33 +1,37 @@
 
     // initialize key arrays
+
     propertytypes = [];
-    timeframes = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    timeframes = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     kwhtimeframes = [];
     thermstimeframes = [];
     propertysubtypes = [];
     outputdata = [];
-    // Grabs Hermosa Data from City of Chicago
-    $.getJSON("https://data.cityofchicago.org/resource/energy-usage-2010.json?community_area_name=Hermosa&$limit=1000&$$app_token=z6DdE5IguzIp3G6lGD3D85bH6", function(data) {
-    console.log("got JSON");
-        //sets empty array values for each month of data
-        kwhcounts = [0,0,0,0,0,0,0,0,0,0,0,0];
-        thermcounts = [0,0,0,0,0,0,0,0,0,0,0,0];
-        kwhcumulative = [0,0,0,0,0,0,0,0,0,0,0,0];
-        thermcumulative = [0,0,0,0,0,0,0,0,0,0,0,0];
-        dividebyself = [1,1,1,1,1,1,1,1,1,1,1,1];
-        // Parses JSON for both kwh and therms used
-    parseData(data);
-        renderData(kwhcumulative, dividebyself, "kWh", "Cumulative Power Usage in kWh");
-        renderData(kwhcumulative,kwhcounts, "kWh", "Average Power Usage in kWh");
-        console.log(kwhcumulative);
-        console.log(kwhcounts);
-        console.log(thermcumulative);
-        console.log(thermcounts);
 
 
-    });
+
+    function hermosaData(datatype, datalist, counts, unit, title) {
 
 
+        if (datatype == "Residential"){
+        // Grabs Hermosa Residential Data from City of Chicago
+            $.getJSON("https://data.cityofchicago.org/resource/energy-usage-2010.json?community_area_name=Hermosa&building_type=Residential&$limit=1000&$$app_token=z6DdE5IguzIp3G6lGD3D85bH6", function (data) {
+                // Parses JSON for both kwh and therms used
+                parseData(data);
+                renderData(datalist, counts, unit, title);
+            });
+        }
+        else if (datatype == "Commercial"){
+        // Grabs Hermosa Commercial Data from City of Chicago
+            $.getJSON("https://data.cityofchicago.org/resource/energy-usage-2010.json?community_area_name=Hermosa&building_type=Commercial&$limit=1000&$$app_token=z6DdE5IguzIp3G6lGD3D85bH6", function (data) {
+                // Parses JSON for both kwh and therms used
+                parseData(data);
+                renderData(datalist, counts, unit, title);
+            });
+        // Renders selected data
+
+        }
+    }
 
 
 
@@ -36,7 +40,7 @@ function parseData(passeddata) {
         kwhtimeframes = [val.kwh_january_2010,val.kwh_february_2010,val.kwh_march_2010,val.kwh_april_2010,val.kwh_may_2010,val.kwh_june_2010,val.kwh_july_2010,val.kwh_august_2010,val.kwh_september_2010,val.kwh_october_2010,val.kwh_november_2010,val.kwh_december_2010];
         thermstimeframes = [val.therm_january_2010,val.therm_february_2010,val.therm_march_2010,val.term_april_2010,val.therm_may_2010,val.therm_june_2010,val.therm_july_2010,val.therm_august_2010,val.therm_september_2010,val.therm_october_2010,val.therm_november_2010,val.therm_december_2010];
 
-        createSelector("building_type","#propertytype", propertytypes,val.building_type);
+
         for (i = 0; i < timeframes.length; i++) {
 
             // populates the data about kwh usage
@@ -59,21 +63,10 @@ function parseData(passeddata) {
 
 
 
-function createSelector(contenttype,contentblock,arraylist,jsondata) {
-    // console.log(dataset.building_subtype);
-
-    if (arraylist.indexOf(jsondata) > -1) {
-       // console.log("no match");
-    }
-    else {
-        arraylist.push(jsondata);
-        //console.log(jsondata);
-        $(contentblock).append('<input type="checkbox" name="' + jsondata + '" id="' + jsondata + '"/><label for="' + jsondata + '">' + jsondata + '</label>');
-    }
-}
     function renderData(whichdata, divisor, datatype, datatitle){
         console.log("rendering");
         for (i = 0; i < whichdata.length; i++) {
+            console.log("Data is:" + whichdata[i]);
             outputdata[i] = (whichdata[i] / divisor[i]);
         }
         var maxval = Math.max.apply(Math,outputdata);
@@ -87,7 +80,44 @@ function createSelector(contenttype,contentblock,arraylist,jsondata) {
             console.log("appended");
         }
     }
+    $(document).ready(function(){
+        $(".main--app-control--button").click(function(){
+            $("#main--app--data--chart").html("");
+            //sets empty array values for each month of data
+            kwhcounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            thermcounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            kwhcumulative = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            thermcumulative = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            dividebyself = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
+            var dataselect = $("input[name='datatype--select']:checked").attr("value");
+            var buildingtypeselect = $("input[name='buildingtype--select']:checked").attr("value");
+            var comparisonselect = $("input[name='comparisontype--select']:checked").attr("value");
+
+            console.log("Data Select:" + dataselect);
+            console.log("Building Select:" + buildingtypeselect);
+            console.log("Comparison Select:" + comparisonselect);
+            if (dataselect == "therms"){
+
+                if (comparisonselect == "average"){
+                    hermosaData(buildingtypeselect,thermcumulative,thermcounts,"Therms",buildingtypeselect + " buildings: Average Therms per month per location");
+                }
+                else if (comparisonselect == "cumulative"){
+                    hermosaData(buildingtypeselect,thermcumulative,dividebyself,"Therms",buildingtypeselect + " buildings: Average Therms per month in Hermosa")
+                }
+            }
+            else if (dataselect == "kWh"){
+                if (comparisonselect == "average"){
+                    hermosaData(buildingtypeselect,kwhcumulative,kwhcounts,"kWh",buildingtypeselect + " buildings: Average kWh per month per location");
+                }
+                else if (comparisonselect == "cumulative"){
+                    hermosaData(buildingtypeselect,kwhcumulative,dividebyself,"kWh",buildingtypeselect + " buildings: Total kWh per month in Hermosa")
+                }
+            }
+
+
+        });
+    });
     /*
     var resinfo = [];
     var cominfo = [];
