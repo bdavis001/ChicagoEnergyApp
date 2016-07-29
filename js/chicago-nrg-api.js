@@ -67,57 +67,76 @@ function parseData(passeddata) {
         console.log("rendering");
         for (i = 0; i < whichdata.length; i++) {
             console.log("Data is:" + whichdata[i]);
-            outputdata[i] = (whichdata[i] / divisor[i]);
+            outputdata[i] = parseInt(whichdata[i] / divisor[i]);
         }
         var maxval = Math.max.apply(Math,outputdata);
         $("#main--app--data--chart").append('<h3 class="main-app-data-title">' + datatitle + '</h3>');
         for (i = 0; i < timeframes.length; i++) {
-            var percentage = (outputdata[i] / maxval) * 100;
+            var percentage = ((outputdata[i] / maxval) * 75) + 25;
             var percentage = percentage + "%";
 
             console.log("Percentage:" + percentage);
-            $("#main--app--data--chart").append('<div style="width:' + percentage + '" class="main-app-data-bar">' + timeframes[i] + ': ' + outputdata[i] + " " + datatype + '</div>');
+            $("#main--app--data--chart").append('<div style="width:' + percentage + '" class="main--app--data--bar">' + timeframes[i] + ': ' + outputdata[i] + " " + datatype + '</div>');
             console.log("appended");
         }
     }
     $(document).ready(function(){
+        
+        // Function for anytime the "Update Dashboard" button is clicked
         $(".main--app-control--button").click(function(){
-            $("#main--app--data--chart").html("");
-            //sets empty array values for each month of data
-            kwhcounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            thermcounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            kwhcumulative = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            thermcumulative = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            dividebyself = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+           processFields();
 
-            var dataselect = $("input[name='datatype--select']:checked").attr("value");
-            var buildingtypeselect = $("input[name='buildingtype--select']:checked").attr("value");
-            var comparisonselect = $("input[name='comparisontype--select']:checked").attr("value");
 
-            console.log("Data Select:" + dataselect);
-            console.log("Building Select:" + buildingtypeselect);
-            console.log("Comparison Select:" + comparisonselect);
-            if (dataselect == "therms"){
-
-                if (comparisonselect == "average"){
-                    hermosaData(buildingtypeselect,thermcumulative,thermcounts,"Therms",buildingtypeselect + " buildings: Average Therms per month per location");
-                }
-                else if (comparisonselect == "cumulative"){
-                    hermosaData(buildingtypeselect,thermcumulative,dividebyself,"Therms",buildingtypeselect + " buildings: Average Therms per month in Hermosa")
-                }
+        });
+        $(".main--app-control--mobile--menu").click(function(){
+            if ($("#main--app--control").hasClass("collapsed")){
+                $("#main--app--control").removeClass("collapsed");
             }
-            else if (dataselect == "kWh"){
-                if (comparisonselect == "average"){
-                    hermosaData(buildingtypeselect,kwhcumulative,kwhcounts,"kWh",buildingtypeselect + " buildings: Average kWh per month per location");
-                }
-                else if (comparisonselect == "cumulative"){
-                    hermosaData(buildingtypeselect,kwhcumulative,dividebyself,"kWh",buildingtypeselect + " buildings: Total kWh per month in Hermosa")
-                }
+            else {
+                $("#main--app--control").addClass("collapsed");
             }
 
 
         });
+        
+        processFields();
     });
+
+    function processFields(){
+        $("#main--app--control").addClass("collapsed");
+        $("#main--app--data--chart").html("");
+        //sets empty array values for each month of data
+        kwhcounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        thermcounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        kwhcumulative = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        thermcumulative = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        dividebyself = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+
+        var dataselect = $("input[name='datatype--select']:checked").attr("value");
+        var buildingtypeselect = $("input[name='buildingtype--select']:checked").attr("value");
+        var comparisonselect = $("input[name='comparisontype--select']:checked").attr("value");
+
+        console.log("Data Select:" + dataselect);
+        console.log("Building Select:" + buildingtypeselect);
+        console.log("Comparison Select:" + comparisonselect);
+        if (dataselect == "therms"){
+
+            if (comparisonselect == "average"){
+                hermosaData(buildingtypeselect,thermcumulative,thermcounts,"Therms",buildingtypeselect + " buildings: Average Therms per month per location");
+            }
+            else if (comparisonselect == "cumulative"){
+                hermosaData(buildingtypeselect,thermcumulative,dividebyself,"Therms",buildingtypeselect + " buildings: Total Therms per month in Hermosa")
+            }
+        }
+        else if (dataselect == "kWh"){
+            if (comparisonselect == "average"){
+                hermosaData(buildingtypeselect,kwhcumulative,kwhcounts,"kWh",buildingtypeselect + " buildings: Average kWh per month per location");
+            }
+            else if (comparisonselect == "cumulative"){
+                hermosaData(buildingtypeselect,kwhcumulative,dividebyself,"kWh",buildingtypeselect + " buildings: Total kWh per month in Hermosa")
+            }
+        }
+    }
     /*
     var resinfo = [];
     var cominfo = [];

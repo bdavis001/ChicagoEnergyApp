@@ -4,19 +4,13 @@ Breakpoint Mixin
 
 @mixin breakpoint($point) {
    @if $point == large {
-     @media (min-width: 70em) { @content ; }
-  }
-   @else if $point == laptop {
-     @media (min-width: 64em) { @content ; }
+     @media (min-width: 920px) { @content ; }
   }
     @else if $point == medium {
-     @media (min-width: 50em) { @content ; }
-  }
-   @else if $point == phablet {
-     @media (min-width: 37.5em)  { @content ; }
+     @media (min-width: 700px) { @content ; }
   }
   @else if $point == small {
-     @media (max-width: 37.5em)  { @content ; }
+     @media (max-width: 480px)  { @content ; }
 
   }
 }
