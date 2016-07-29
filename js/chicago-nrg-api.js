@@ -96,7 +96,11 @@
                 $("#main--app--control").addClass("collapsed");
             }
         });
-        
+        // Highlights selected options
+        $(".datatype-selector-button").click(function(){
+            $(this).parent().children("label").removeClass("selected");
+            $(this).addClass("selected");
+       });
         processFields();
     });
     // Processes field inputs

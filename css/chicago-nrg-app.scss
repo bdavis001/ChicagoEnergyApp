@@ -31,6 +31,10 @@ body {
   }
 }
 
+.selected{
+  background: #2856ad !important;
+}
+
 
 header {
     margin:1%;
@@ -114,7 +118,7 @@ header {
         display:block;
         width:90%;
         height:20px;
-        background:#325ea8;
+        background: #375681;
         padding:5px;
         margin:0px 4% 10px 4%;
         float:left;
@@ -126,6 +130,10 @@ header {
           padding:2%;
           margin:-2px 4% 0 0;
         }
+      &:hover{
+        background: #2965cc;
+      }
+
         input{
           float:left;
         }
@@ -135,18 +143,23 @@ header {
         }
     }
       .main--app-control--button {
-      width:92%;
+        width:92%;
         display:block;
         float:left;
         margin:20px 4%;
-        background:#a60c07;
+        background: #990c07;
         padding:10px 0px;
         text-align:center;
+        border-radius:4px;
         @include breakpoint(large) {
             margin:20px 0px;
             width:96%;
         }
+        &:hover{
+          background: #b30c07;
+        }
       }
+
   }
   .main--app--data{
       float:left;
